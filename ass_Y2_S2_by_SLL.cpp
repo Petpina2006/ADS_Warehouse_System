@@ -1113,7 +1113,7 @@ void reportMenu()
 
 void StaffOption()
 {
-    // initializeStaff();
+    initializeStaff();
     int ch, n;
     do
     {
@@ -1196,7 +1196,7 @@ void StaffOption()
 }
 void CategoryOption()
 {
-    // initializeCategory();
+    initializeCategory();
 
     int ch, n;
     do
@@ -1270,7 +1270,7 @@ void CategoryOption()
 }
 void ProductOption()
 {
-    // initializeProduct();
+    initializeProduct();
 
     int ch, n;
     do
@@ -1404,6 +1404,7 @@ int main()
     cout << "  " << "4. Pheng Sovanreach           [ 20 ]\n";
     cout << "  " << "5. Phern Sopheng              [ 18 ]\n";
     cout << "\n=======================================================\n";
+    readData();
     mainMenu();
     return 0;
 }
