@@ -8,7 +8,7 @@
 using namespace std;
 //                         STRUCT NODE OF STAFF
 // -------------------------------------------------------------------------
-struct Staff
+struct NodeStaff
 {
     int id;
     char name[50];
@@ -17,47 +17,47 @@ struct Staff
     char position[50];
     float salary;
     char phone[20];
-    Staff *next;
+    NodeStaff *next;
 };
 //                         STRUCT NODE OF CATEGORY
 // -------------------------------------------------------------------------
 
-struct Category
+struct NodeCategory
 {
     int id;   
     char name[50];
     char address[50];
-    Category *next;
+    NodeCategory *next;
 };
 //                         STRUCT NODE OF CATEGORY
 // -------------------------------------------------------------------------
-struct Product
+struct NodeProduct
 {
     int id;
     char name[50];
     int quantity;
     float price;
     int categoryId;
-    Product *next;
+    NodeProduct *next;
 };
-struct Sale
+struct NodeSale
 {
     int id;
     char name[50];
     int qty;
     float price;
     float total;
-    Sale *next;
+    NodeSale *next;
 };
 // GlobaL for list
-Staff *StaffList = NULL;
-Category *CategoryList = NULL;
-Product *ProductList = NULL;
-Sale *SaleList = NULL;
+NodeStaff *StaffList = NULL;
+NodeCategory *CategoryList = NULL;
+NodeProduct *ProductList = NULL;
+NodeSale *SaleList = NULL;
 // Function prototypes
-Staff *getnodeStaff();
-Category *getnodeCategory();
-Product *getnodeProduct();
+NodeStaff *getnodeStaff();
+NodeCategory *getnodeCategory();
+NodeProduct *getnodeProduct();
 void initializeStaff();
 void initializeCategory();
 void initializeProduct();
@@ -67,7 +67,7 @@ void writeData()
 {
     // -------- Staff --------
     ofstream staffFile("staffs.txt");
-    Staff *s = StaffList;
+    NodeStaff *s = StaffList;
     while (s != NULL)
     {
         staffFile << s->id << "|"
@@ -82,7 +82,7 @@ void writeData()
     staffFile.close();
     // -------- Category --------
     ofstream catFile("categories.txt");
-    Category *c = CategoryList;
+    NodeCategory *c = CategoryList;
     while (c != NULL)
     {
         catFile << c->id << "|"
@@ -93,7 +93,7 @@ void writeData()
     catFile.close();
     // -------- Product --------
     ofstream prodFile("products.txt");
-    Product *p = ProductList;
+    NodeProduct *p = ProductList;
     while (p != NULL)
     {
         prodFile << p->id << "|"
@@ -106,7 +106,7 @@ void writeData()
     prodFile.close();
     // -------- Sales --------
     ofstream saleFile("sales.txt");
-    Sale *sale = SaleList;
+    NodeSale *sale = SaleList;
     while (sale != NULL)
     {
         saleFile << sale->id << "|"
@@ -128,7 +128,7 @@ void readData()
     // -------- Staff --------
     ifstream staffFile("staffs.txt");
     StaffList = NULL;
-    Staff *s, *sPtr = NULL;
+    NodeStaff *s, *sPtr = NULL;
 
     while (getline(staffFile, line))
     {
@@ -157,7 +157,7 @@ void readData()
     // -------- Category --------
     ifstream catFile("categories.txt");
     CategoryList = NULL;
-    Category *c, *cPtr = NULL;
+    NodeCategory *c, *cPtr = NULL;
 
     while (getline(catFile, line))
     {
@@ -182,7 +182,7 @@ void readData()
     // -------- Product --------
     ifstream prodFile("products.txt");
     ProductList = NULL;
-    Product *p, *pPtr = NULL;
+    NodeProduct *p, *pPtr = NULL;
 
     while (getline(prodFile, line))
     {
@@ -208,11 +208,11 @@ void readData()
     // -------- Sales --------
     ifstream saleFile("sales.txt");
     SaleList = NULL;
-    Sale *sale, *salePtr = NULL;
+    NodeSale *sale, *salePtr = NULL;
 
     while (getline(saleFile, line))
     {
-        sale = (Sale *)malloc(sizeof(Sale));
+        sale = (NodeSale *)malloc(sizeof(NodeSale));
 
         sscanf(line.c_str(), "%d|%[^|]|%d|%f|%f",
                &sale->id,
@@ -245,10 +245,10 @@ void initializeStaff()
     StaffList = NULL;
 }
 // GETNODE
-struct Staff *getnodeStaff()
+struct NodeStaff *getnodeStaff()
 {
-    struct Staff *p;
-    p = (struct Staff *)malloc(sizeof(struct Staff)); // allocate memory
+    struct NodeStaff *p;
+    p = (struct NodeStaff *)malloc(sizeof(struct NodeStaff)); // allocate memory
 
     if (p == NULL)
     {
@@ -260,14 +260,14 @@ struct Staff *getnodeStaff()
     return p;
 }
 // FREE NODE
-void freeNode(Staff *p)
+void freeNode(NodeStaff *p)
 {
     free(p);
 }
 // ADD STAFF
-Staff *CreateStaffList(int n)
+NodeStaff *CreateStaffList(int n)
 {
-    Staff *p, *ptr = StaffList;
+    NodeStaff *p, *ptr = StaffList;
 
     for (int i = 1; i <= n; i++)
     {
@@ -311,9 +311,9 @@ Staff *CreateStaffList(int n)
     return StaffList;
 }
 // VIEW STAFF
-void Traverse(Staff *StaffList)
+void Traverse(NodeStaff *StaffList)
 {
-    Staff *p = StaffList;
+    NodeStaff *p = StaffList;
     cout << "\033[33m Id" << setw(20) << "Name" << setw(25) << "Gender" << setw(25) << "Date of birth" << setw(20) << "Position" << setw(20) << "Salary" << setw(30) << "Phone Number \033[0m" << endl;
     cout << "------------------------------------------------------------------------------------------------------------------------------------" << endl;
     cout << "                                                        Staff List:\n";
@@ -343,7 +343,7 @@ void Traverse(Staff *StaffList)
 int CountStaff()
 {
     int count = 0;
-    Staff *p = StaffList;
+    NodeStaff *p = StaffList;
 
     while (p != NULL)
     {
@@ -353,7 +353,7 @@ int CountStaff()
     return count;
 }
 // Linear Search
-int LinearSearchStaff(Staff *StaffList, int key)
+int LinearSearchStaff(NodeStaff *StaffList, int key)
 {
     int pos = 0;
 
@@ -369,14 +369,14 @@ int LinearSearchStaff(Staff *StaffList, int key)
     return -1;
 }
 // sort
-void BubbleSortStaffByID(Staff *StaffList)
+void BubbleSortStaffByID(NodeStaff *StaffList)
 {
     if (StaffList == NULL)
         return;
 
-    for (Staff *p = StaffList; p != NULL; p = p->next)
+    for (NodeStaff *p = StaffList; p != NULL; p = p->next)
     {
-        for (Staff *q = p->next; q != NULL; q = q->next)
+        for (NodeStaff *q = p->next; q != NULL; q = q->next)
         {
             if (p->id > q->id)
             {
@@ -394,9 +394,9 @@ void BubbleSortStaffByID(Staff *StaffList)
     }
 }
 // delete staff
-Staff *DeleteStaff(Staff *StaffList, int id)
+NodeStaff *DeleteStaff(NodeStaff *StaffList, int id)
 {
-    Staff *p = StaffList, *prev = NULL;
+    NodeStaff *p = StaffList, *prev = NULL;
 
     // search node
     while (p != NULL && p->id != id)
@@ -428,9 +428,9 @@ Staff *DeleteStaff(Staff *StaffList, int id)
     return StaffList;
 }
 // update staff
-Staff *UpdateStaff(Staff *StaffList, int id)
+NodeStaff *UpdateStaff(NodeStaff *StaffList, int id)
 {
-    Staff *p = StaffList;
+    NodeStaff *p = StaffList;
 
     // search node
     while (p != NULL && p->id != id)
@@ -482,10 +482,10 @@ void initializeCategory()
     CategoryList = NULL;
 }
 // GETNODE
-struct Category *getnodeCategory()
+struct NodeCategory *getnodeCategory()
 {
-    struct Category *p;
-    p = (struct Category *)malloc(sizeof(struct Category)); // allocate memory
+    struct NodeCategory *p;
+    p = (struct NodeCategory *)malloc(sizeof(struct NodeCategory)); // allocate memory
 
     if (p == NULL)
     {
@@ -497,14 +497,14 @@ struct Category *getnodeCategory()
     return p;
 }
 // FREE NODE
-void freeNode(Category *p)
+void freeNode(NodeCategory *p)
 {
     free(p);
 }
 // ADD CATEGORY
-Category *CreateCategoryList(int n)
+NodeCategory *CreateCategoryList(int n)
 {
-    Category *p, *ptr = CategoryList;
+    NodeCategory *p, *ptr = CategoryList;
     for (int i = 1; i <= n; i++)
     {
         p = getnodeCategory();
@@ -534,9 +534,9 @@ Category *CreateCategoryList(int n)
     return CategoryList;
 }
 // VIEW CATEGORY
-void Traverse(Category *CategoryList)
+void Traverse(NodeCategory *CategoryList)
 {
-    Category *p = CategoryList;
+    NodeCategory *p = CategoryList;
 
     cout << "\033[32m Id" << setw(20) << "Name" << setw(25) << "Address\033[0m" << endl;
     cout << "--------------------------------------------------------" << endl;
@@ -563,7 +563,7 @@ void Traverse(Category *CategoryList)
 int CountCategory()
 {
     int count = 0;
-    Category *p = CategoryList;
+    NodeCategory *p = CategoryList;
 
     while (p != NULL)
     {
@@ -573,7 +573,7 @@ int CountCategory()
     return count;
 }
 // Linear Search
-int LinearSearchCategory(Category *CategoryList, int key)
+int LinearSearchCategory(NodeCategory *CategoryList, int key)
 {
     int pos = 0;
 
@@ -589,14 +589,14 @@ int LinearSearchCategory(Category *CategoryList, int key)
     return -1;
 }
 // sort
-void BubbleSortCategoryByID(Category *CategoryList)
+void BubbleSortCategoryByID(NodeCategory *CategoryList)
 {
     if (CategoryList == NULL)
         return;
 
-    for (Category *p = CategoryList; p != NULL; p = p->next)
+    for (NodeCategory *p = CategoryList; p != NULL; p = p->next)
     {
-        for (Category *q = p->next; q != NULL; q = q->next)
+        for (NodeCategory *q = p->next; q != NULL; q = q->next)
         {
             if (p->id > q->id)
             {
@@ -609,9 +609,9 @@ void BubbleSortCategoryByID(Category *CategoryList)
     }
 }
 // delete category
-Category *DeleteCategory(Category *CategoryList, int id)
+NodeCategory *DeleteCategory(NodeCategory *CategoryList, int id)
 {
-    Category *p = CategoryList, *prev = NULL;
+    NodeCategory *p = CategoryList, *prev = NULL;
 
     // search node
     while (p != NULL && p->id != id)
@@ -643,9 +643,9 @@ Category *DeleteCategory(Category *CategoryList, int id)
     return CategoryList;
 }
 // update category
-Category *UpdateCategory(Category *CategoryList, int id)
+NodeCategory *UpdateCategory(NodeCategory *CategoryList, int id)
 {
-    Category *p = CategoryList;
+    NodeCategory *p = CategoryList;
 
     // search node
     while (p != NULL && p->id != id)
@@ -684,10 +684,10 @@ void initializeProduct()
     ProductList = NULL;
 }
 // GETNODE
-struct Product *getnodeProduct()
+struct NodeProduct *getnodeProduct()
 {
-    struct Product *p;
-    p = (struct Product *)malloc(sizeof(struct Product)); // allocate memory
+    struct NodeProduct *p;
+    p = (struct NodeProduct *)malloc(sizeof(struct NodeProduct)); // allocate memory
 
     if (p == NULL)
     {
@@ -700,14 +700,14 @@ struct Product *getnodeProduct()
 }
 
 // FREE NODE
-void freeNode(Product *p)
+void freeNode(NodeProduct *p)
 {
     free(p);
 }
 // ADD PRODUCT
-Product *CreateProductList(int n)
+NodeProduct *CreateProductList(int n)
 {
-    Product *p, *ptr = ProductList;
+    NodeProduct *p, *ptr = ProductList;
     for (int i = 1; i <= n; i++)
     {
         p = getnodeProduct();
@@ -743,9 +743,9 @@ Product *CreateProductList(int n)
     return ProductList;
 }
 // VIEW PRODUCT
-void Traverse(Product *ProductList)
+void Traverse(NodeProduct *ProductList)
 {
-    Product *p = ProductList;
+    NodeProduct *p = ProductList;
 
     cout << "\033[35m Id" << setw(20) << "Name" << setw(25) << "Quantity" << setw(20) << "Price" << setw(30) << "CategoryID\033[0m" << endl;
     cout << "---------------------------------------------------------------------------------------------------" << endl;
@@ -777,7 +777,7 @@ void Traverse(Product *ProductList)
 int CountProduct()
 {
     int count = 0;
-    Product *p = ProductList;
+    NodeProduct *p = ProductList;
 
     while (p != NULL)
     {
@@ -787,7 +787,7 @@ int CountProduct()
     return count;
 }
 // Linear Search
-int LinearSearchProduct(Product *ProductList, int key)
+int LinearSearchProduct(NodeProduct *ProductList, int key)
 {
     int pos = 0;
 
@@ -803,14 +803,14 @@ int LinearSearchProduct(Product *ProductList, int key)
     return -1;
 }
 // sort
-void BubbleSortProductByID(Product *ProductList)
+void BubbleSortProductByID(NodeProduct *ProductList)
 {
     if (ProductList == NULL)
         return;
 
-    for (Product *p = ProductList; p != NULL; p = p->next)
+    for (NodeProduct *p = ProductList; p != NULL; p = p->next)
     {
-        for (Product *q = p->next; q != NULL; q = q->next)
+        for (NodeProduct *q = p->next; q != NULL; q = q->next)
         {
             if (p->id > q->id)
             {
@@ -825,9 +825,9 @@ void BubbleSortProductByID(Product *ProductList)
     }
 }
 // delete product
-Product *DeleteProduct(Product *ProductList, int id)
+NodeProduct *DeleteProduct(NodeProduct *ProductList, int id)
 {
-    Product *p = ProductList, *prev = NULL;
+    NodeProduct *p = ProductList, *prev = NULL;
 
     // search node
     while (p != NULL && p->id != id)
@@ -859,9 +859,9 @@ Product *DeleteProduct(Product *ProductList, int id)
     return ProductList;
 }
 // update product
-Product *UpdateProduct(Product *ProductList, int id)
+NodeProduct *UpdateProduct(NodeProduct *ProductList, int id)
 {
-    Product *p = ProductList;
+    NodeProduct *p = ProductList;
 
     // search node
     while (p != NULL && p->id != id)
@@ -898,7 +898,7 @@ Product *UpdateProduct(Product *ProductList, int id)
                             Sale
     =======================================================
 */
-void ShowProductMenu(Product *plist)
+void ShowProductMenu(NodeProduct *plist)
 {
     cout << "\n====== PRODUCT MENU ======\n";
     cout << "ID\tName\t\tPrice\n";
@@ -920,7 +920,7 @@ void SaleProduct()
     readData();
 
     int id, qty;
-    Product *p = ProductList;
+    NodeProduct *p = ProductList;
 
     ShowProductMenu(ProductList);
 
@@ -970,7 +970,7 @@ void SaleProduct()
     float total = qty * p->price;
 
     // ===== SAVE SALE (ADD HERE) =====
-    Sale *s = (Sale *)malloc(sizeof(Sale));
+    NodeSale *s = (NodeSale *)malloc(sizeof(NodeSale));
 
     s->id = p->id;
     strcpy(s->name, p->name);
@@ -985,7 +985,7 @@ void SaleProduct()
     }
     else
     {
-        Sale *temp = SaleList;
+        NodeSale *temp = SaleList;
         while (temp->next != NULL)
             temp = temp->next;
         temp->next = s;
@@ -1010,7 +1010,7 @@ void ShowInStock()
 {
     readData();
 
-    Product *p = ProductList;
+    NodeProduct *p = ProductList;
 
     cout << "\n\033[32m======= IN STOCK PRODUCTS =======\033[0m\n";
     cout << "ID\tName\tQty\tStatus\n";
@@ -1058,7 +1058,7 @@ void reportMenu()
     float grandTotal = 0;
     int lowStockCount = 0;
 
-    Product *p = ProductList;
+    NodeProduct *p = ProductList;
 
     while (p != NULL)
     {
@@ -1083,7 +1083,7 @@ void reportMenu()
     cout << "\033[31mID\tName\tQty\tPrice\tTotal\033[0m\n";
     cout << "\033[31m------------------------------------------\033[0m\n";
 
-    Sale *s = SaleList;
+    NodeSale *s = SaleList;
     float salesGrandTotal = 0;
 
     while (s != NULL)
@@ -1362,7 +1362,7 @@ void mainMenu()
         cout << "1.  Category\n";
         cout << "2.  Staff\n";
         cout << "3.  Product\n";
-        cout << "4.  SellProduct\n";
+        cout << "4.  Sale\n";
         cout << "5. Stock In\n";
         cout << "6. Reports\n";
         cout << "0. Exit\n";
